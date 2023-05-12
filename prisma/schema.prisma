@@ -1,0 +1,46 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Order {
+  id            String   @id @default(uuid())
+  sourceOrderId String   @unique
+  accountRef    String
+  createdAt     DateTime @default(now())
+  items         Item[]
+  orderStatus   String   @default("processing")
+}
+
+model Item {
+  id                     String  @id @default(uuid())
+  itemTemplate           String
+  artFrontUrl            String
+  artBackUrl             String
+  shippingAddressName    String
+  shippingAddressLine1   String
+  shippingAddressLine2   String
+  shippingAddressTown    String
+  shippingAddressState   String
+  shippingAddressCountry String
+  shippingAddressZipCode String
+  sourceItemId           String
+  order                  Order   @relation(fields: [orderId], references: [id])
+  orderId                String
+  itemStatus             String  @default("Processing")
+  batchId                String  @default("-1")
+  batchOrder             Int     @default(0)
+  deliveryDate           String?
+  mailDate               String?
+  mailerId               String?
+  serialNunber           String?
+  reasonCode             String?
+  newAddress             String?
+  imbCode                String?
+  sequence               String  @default("-1")
+}

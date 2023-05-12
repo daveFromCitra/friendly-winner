@@ -1,0 +1,89 @@
+// Webhooks to update items will come through as arrays or objects.
+// These will be sent to whatever URL you'd like and can be given an API key auth upon request.
+// These ill be sent as a PUT request.
+[    
+    // This is just to show all the incoming fields
+    { 
+        // STRING This will be the Item ID that Property Radar Provides
+        "sourceItemId": "5b4fd6eceef68e0019b581b5", 
+        // STRING This will be the Order ID that Property Radar Provides
+        "sourceOrderId": "5ef68e5019b581a5b4fd6ece", 
+        // STRING These are the possible Status from the mailTracker ["Processing", "Sorted", "In-Transit", "Forwarded", "Delivered", "Returned"]
+        "status": "Delivered",
+        // Will be formatted like this
+        "deliveryDate": "2023-05-08", 
+        // Will be formatted like this (but will only show up on [In-Transit, Returned, Forwarded and Delivered])
+        "scanDate": "2023-05-04T14:14:02", 
+        // Will be formatted like this (but will only show up on [In-Transit, Returned, Forwarded and Delivered])
+        "mailDate": "2023-04-25", 
+        // (will only show up on [In-Transit, Returned, Forwarded and Delivered])
+        "mailerId": "298144", 
+        // (but will only show up on [In-Transit, Returned, Forwarded and Delivered])
+        "serialNumber": "041632916",
+        // STRING [A, E, I, L, M, N, P, Q, R, S, U, V]
+        "reasonCode": "A",
+        // STRING [null, 123 Fake Street, Sacramento, CA, 95831]
+        "newAddress": "123 Fake Street, Sacramento, CA, 95831",
+        // STRING (only present on statuses after Processing)
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    },
+
+    // Once sorted, this message will be sent out 
+    { 
+        "sourceItemId": "fceef68e0019b581b5b4fd65",
+        "sourceOrderId": "g68e5019b5815ea5b4fd6ece", 
+        "status": "Sorted",
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    },
+
+    // Once shipped, this maessage will be sent out
+    { 
+        "sourceItemId": "fceef68e0019b581b5b4fd65",
+        "sourceOrderId": "g68e5019b5815ea5b4fd6ece", 
+        "status": "In-Transit",
+        "scanDate": "2023-05-04T14:14:02",
+        "mailDate": "2023-04-25",
+        "mailerId": "298144", 
+        "serialNumber": "041632916",
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    },
+
+    // If mail forwarded, this message will be sent out
+    { 
+        "sourceItemId": "eceef68e0019b581b5b4fd65",
+        "sourceOrderId": "f68e5019b5815ea5b4fd6ece", 
+        "status": "Forwarded",
+        "scanDate": "2023-05-04T14:14:02",
+        "mailDate": "2023-04-25",
+        "mailerId": "298144", 
+        "serialNumber": "041632916",
+        "newAddress": "123 Fake Street, Sacramento, CA, 95831",
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    },
+
+    // If mail returned, this message will be sent out
+    { 
+        "sourceItemId": "fceef68e0019b581b5b4fd65",
+        "sourceOrderId": "g68e5019b5815ea5b4fd6ece", 
+        "status": "Returned",
+        "scanDate": "2023-05-04T14:14:02",
+        "mailDate": "2023-04-25",
+        "mailerId": "298144", 
+        "serialNumber": "041632916",
+        "reasonCode": "N",
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    },
+
+    // If mail delivered, this message will be sent out
+    { 
+        "sourceItemId": "5b4fd6eceef68e0019b581b5",
+        "sourceOrderId": "5ef68e5019b581a5b4fd6ece",
+        "status": "Delivered",
+        "deliveryDate": "2023-05-08",
+        "scanDate": "2023-05-04T14:14:02",
+        "mailDate": "2023-04-25",
+        "mailerId": "298144",
+        "serialNumber": "041632916",
+        "imbCode": "DATTDDADAFAFDFATFDTTTFDDTTDAFTTADDTFAFDTTDDTADDTADAFDATTFDFTAFDDA"
+    }
+]

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+
+        html {
+            font-family: 'Open Sans', sans-serif;
+            color: #34315C;
+            background-image: url(https://deltaprintgroup.com/wp-content/uploads/2022/03/DPG_Years-In-Industry_Background-01.jpg) !important;
+            background-size: cover;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            margin: 1rem 0;
+
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        #pickInput {
+            border: 2px #F2A900 solid;
+            font-size: 1.5rem;
+            display: block;
+            width: 300px;
+        }
+        #batchDownload {
+            font-size: 1.5rem;
+            display: block;
+            background: #34315C;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .main-body-area {
+            max-width: 700px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main" style="display: flex; justify-content: center;">
+        <div class="main-body-area" style="max-width: 700px;">
+            <h1>Pickup Zone</h1>
+            <input type="text" id="pickInput">
+            <button id="batchDownload" onclick="excelFormSubmit()">Download Batch</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+        function downloadExcelFromApiResponse(apiResponse) {
+            const workbook = XLSX.utils.book_new();
+            const worksheet = XLSX.utils.json_to_sheet(apiResponse);
+
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet 1');
+
+            const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+            const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const excelFilename = 'data.xlsx';
+
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                // For IE and Edge browsers
+                window.navigator.msSaveOrOpenBlob(excelBlob, excelFilename);
+            } else {
+                // For other browsers
+                const excelUrl = URL.createObjectURL(excelBlob);
+                const downloadLink = document.createElement('a');
+
+                downloadLink.href = excelUrl;
+                downloadLink.download = excelFilename;
+                downloadLink.target = '_blank';
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+        }
+
+        async function downloadExcelDataFromDatabase(urlBase, batchId) {
+            fetch(`${urlBase}${batchId}`)
+                .then(data => data.json())
+                .then(json => {
+                    // Call the function to convert and download the Excel file
+                    console.log(json);
+                    downloadExcelFromApiResponse(json);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle the error appropriately
+                });
+        }
+
+        function excelFormSubmit() {
+            const batchInput = document.getElementById('pickInput').value
+            console.log(batchInput);
+            downloadExcelDataFromDatabase('https://api.citracommunications.com/batch/', batchInput)
+        }
+
+    </script>
+
+</body>
+
+</html>

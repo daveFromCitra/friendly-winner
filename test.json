@@ -1,0 +1,13 @@
+{
+    "sourceOrderId": "0001",
+    "items": [
+      {
+        "sourceItemId": "001",
+        "url": "www.image.pdf"
+      },
+      {
+        "sourceItemId": "002",
+        "url": "www.image2.pdf"
+      }
+    ]
+  }

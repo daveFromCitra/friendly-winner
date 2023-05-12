@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Excel to JSON Dropzone</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+
+    html {
+      font-family: 'Open Sans', sans-serif;
+          color: #34315C;
+          background-image: url(https://deltaprintgroup.com/wp-content/uploads/2022/03/DPG_Years-In-Industry_Background-01.jpg)!important;
+          background-size: cover;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin: 1rem 0;
+
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin: 1rem 0;
+    }
+
+    #excelDropzone {
+      border: 5px #F2A900 dashed; 
+    }
+
+    .main-body-area {
+      max-width: 700px;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="main" style="display: flex; justify-content: center;">
+    <div class="main-body-area" style="max-width: 700px;">
+      <h1>MSI DPG</h1>
+      <h2>Excel Dropzone</h2>
+      <form action="/upload" class="dropzone" id="excelDropzone"  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></form>
+      <p>Drop sorted Excel files here.</p> 
+    </div>
+  </div>
+</body>
+</html>
